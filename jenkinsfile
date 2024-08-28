@@ -1,0 +1,23 @@
+def GITCOMMIT // Declaring GITCOMMIT as a global variable
+pipeline {
+     agent any
+
+    stages {
+        stage('git clone') {
+            steps {
+                script {
+                    git credentialsId: 'gitlab-creds', url: 'http://repo.antiersolutions.com/zeta-cast/admin-frontend.git', branch: 'stage' 
+                }
+            }
+        }
+        stage('Docker build') {
+            steps {
+                script {
+                    // Docker build
+                    sh "docker build -t arbitrage-admin-frontend ." 
+                }
+            }
+        }
+        
+    }
+}
